@@ -1,0 +1,15 @@
+{
+  "defaultEvent": "nascita",
+  "events": [
+    {
+      "id": "matrimonio",
+      "name": "Marco & Giulia",
+      "file": "matrimonio.json"
+    },
+    {
+      "id": "nascita",
+      "name": "Benvenuta al mondo ✨",
+      "file": "nascita.json"
+    }
+  ]
+}

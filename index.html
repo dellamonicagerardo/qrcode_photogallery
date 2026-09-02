@@ -1,1 +1,66 @@
-hello
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Gallery fotografica">
+  <meta name="theme-color" content="#faf6f2">
+  <title>Gallery</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <div class="page-bg" aria-hidden="true"></div>
+
+  <header class="hero">
+    <p class="hero-eyebrow" id="hero-eyebrow"></p>
+    <h1 class="hero-title" id="hero-title"></h1>
+    <p class="hero-subtitle" id="hero-subtitle"></p>
+    <div class="hero-scroll" aria-hidden="true">
+      <span>Scorri</span>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M12 5v14M5 12l7 7 7-7"/>
+      </svg>
+    </div>
+  </header>
+
+  <main>
+    <section class="gallery-section" aria-label="Gallery foto e video">
+      <div class="gallery-grid" id="gallery-grid" role="list"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p class="footer-heart" id="footer-symbol" aria-hidden="true">♥</p>
+    <p class="footer-text" id="footer-text"></p>
+  </footer>
+
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Anteprima media" hidden>
+    <button class="lightbox-close" id="lightbox-close" aria-label="Chiudi">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M18 6L6 18M6 6l12 12"/>
+      </svg>
+    </button>
+    <button class="lightbox-nav lightbox-prev" id="lightbox-prev" aria-label="Elemento precedente">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M15 18l-6-6 6-6"/>
+      </svg>
+    </button>
+    <button class="lightbox-nav lightbox-next" id="lightbox-next" aria-label="Elemento successivo">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M9 18l6-6-6-6"/>
+      </svg>
+    </button>
+    <figure class="lightbox-content">
+      <div class="lightbox-media" id="lightbox-media">
+        <img class="lightbox-img" id="lightbox-img" src="" alt="" hidden>
+        <video class="lightbox-video" id="lightbox-video" controls playsinline preload="metadata" hidden></video>
+      </div>
+      <p class="lightbox-counter" id="lightbox-counter" aria-live="polite"></p>
+    </figure>
+  </div>
+
+  <script src="assets/js/event-loader.js"></script>
+  <script src="assets/js/gallery.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

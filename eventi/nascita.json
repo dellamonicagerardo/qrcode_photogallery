@@ -1,0 +1,49 @@
+{
+  "id": "nascita",
+  "meta": {
+    "title": "Benvenuta al mondo ✨",
+    "description": "Gallery fotografica — i primi momenti insieme",
+    "themeColor": "#faf6f2"
+  },
+  "hero": {
+    "eyebrow": "2 settembre 2025",
+    "titleBefore": "Benvenuta",
+    "titleHighlight": "al mondo",
+    "subtitle": "I primi istanti di una storia meravigliosa",
+    "scrollLabel": "Scorri"
+  },
+  "footer": {
+    "symbol": "♥",
+    "text": "Con tutto il nostro amore"
+  },
+  "theme": {
+    "colors": {
+      "bg": "#faf6f2",
+      "bgWarm": "#f5ebe3",
+      "surface": "#ffffff",
+      "text": "#3d2f2a",
+      "textSoft": "#8a7568",
+      "accent": "#c9a99a",
+      "accentLight": "#e8d5cc",
+      "gold": "#b8956a",
+      "gradient1": "rgba(232, 213, 204, 0.5)",
+      "gradient2": "rgba(201, 169, 154, 0.25)"
+    },
+    "fonts": {
+      "googleUrl": "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Outfit:wght@300;400;500&display=swap",
+      "display": "Cormorant Garamond",
+      "body": "Outfit"
+    }
+  },
+  "items": [
+    "images/nascita/full/01.jpg",
+    { "type": "video", "src": "videos/nascita/01.mp4", "poster": "images/nascita/full/04.jpg" },
+    "images/nascita/full/02.jpg",
+    "images/nascita/full/03.jpg",
+    { "type": "video", "src": "videos/nascita/02.webm", "poster": "images/nascita/full/07.jpg" },
+    "images/nascita/full/05.jpg",
+    "images/nascita/full/06.jpg",
+    "images/nascita/full/07.jpg",
+    "images/nascita/full/08.jpg"
+  ]
+}

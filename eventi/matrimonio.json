@@ -1,0 +1,48 @@
+{
+  "id": "matrimonio",
+  "meta": {
+    "title": "Marco & Giulia — Il nostro giorno",
+    "description": "Gallery del matrimonio — ricordi da condividere",
+    "themeColor": "#f8f4ec"
+  },
+  "hero": {
+    "eyebrow": "15 giugno 2025",
+    "titleBefore": "Marco & Giulia",
+    "titleHighlight": "per sempre",
+    "subtitle": "Un giorno indimenticabile, da custodire per sempre",
+    "scrollLabel": "Scorri"
+  },
+  "footer": {
+    "symbol": "♥",
+    "text": "Grazie per aver condiviso con noi"
+  },
+  "theme": {
+    "colors": {
+      "bg": "#f8f4ec",
+      "bgWarm": "#f0e8da",
+      "surface": "#ffffff",
+      "text": "#2c2419",
+      "textSoft": "#7a6b55",
+      "accent": "#b8956a",
+      "accentLight": "#e5d4b8",
+      "gold": "#9a7b4f",
+      "gradient1": "rgba(184, 149, 106, 0.28)",
+      "gradient2": "rgba(154, 123, 79, 0.18)"
+    },
+    "fonts": {
+      "googleUrl": "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400&display=swap",
+      "display": "Playfair Display",
+      "body": "Lato"
+    }
+  },
+  "items": [
+    "images/matrimonio/full/01.jpg",
+    "images/matrimonio/full/02.jpg",
+    "images/matrimonio/full/03.jpg",
+    "images/matrimonio/full/04.jpg",
+    "images/matrimonio/full/05.jpg",
+    "images/matrimonio/full/06.jpg",
+    "images/matrimonio/full/07.jpg",
+    "images/matrimonio/full/08.jpg"
+  ]
+}

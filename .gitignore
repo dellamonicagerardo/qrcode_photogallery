@@ -1,0 +1,3 @@
+# Originali mirrorless per evento (non committare le foto grezze)
+images/*/original/*
+!images/*/original/.gitkeep
