@@ -63,13 +63,17 @@ function applyMeta(meta) {
 function applyHero(hero) {
   if (!hero) return;
 
+  const intro = document.getElementById("intro");
+  const introBg = document.getElementById("intro-bg");
+  const introOverlay = document.getElementById("intro-overlay");
   const eyebrow = document.getElementById("hero-eyebrow");
   const title = document.getElementById("hero-title");
   const subtitle = document.getElementById("hero-subtitle");
-  const scroll = document.querySelector(".hero-scroll span");
+  const scrollLabel = document.getElementById("hero-scroll-label");
 
   if (eyebrow) eyebrow.textContent = hero.eyebrow || "";
   if (subtitle) subtitle.textContent = hero.subtitle || "";
+  if (scrollLabel) scrollLabel.textContent = hero.scrollLabel || "Scorri";
 
   if (title) {
     const before = hero.titleBefore || "";
@@ -81,7 +85,16 @@ function applyHero(hero) {
     }
   }
 
-  if (scroll) scroll.textContent = hero.scrollLabel || "Scorri";
+  if (hero.cover && introBg) {
+    introBg.style.backgroundImage = `url("${hero.cover}")`;
+    intro?.classList.add("has-cover");
+    const opacity = hero.overlay ?? 0.5;
+    if (introOverlay) introOverlay.style.opacity = String(opacity);
+  } else {
+    intro?.classList.remove("has-cover");
+    if (introBg) introBg.style.backgroundImage = "";
+    if (introOverlay) introOverlay.style.opacity = "0";
+  }
 }
 
 function applyFooter(footer) {

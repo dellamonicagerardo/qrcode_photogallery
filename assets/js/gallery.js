@@ -9,12 +9,14 @@ const lightboxMedia = document.getElementById("lightbox-media");
 const lightboxImg = document.getElementById("lightbox-img");
 const lightboxVideo = document.getElementById("lightbox-video");
 const lightboxCounter = document.getElementById("lightbox-counter");
+const lightboxThumbsTrack = document.getElementById("lightbox-thumbs-track");
 const btnClose = document.getElementById("lightbox-close");
 const btnPrev = document.getElementById("lightbox-prev");
 const btnNext = document.getElementById("lightbox-next");
 
 let currentIndex = 0;
 let touchStartX = 0;
+let thumbsBuilt = false;
 
 function normalizeItem(raw) {
   if (typeof raw === "string") {
@@ -65,6 +67,7 @@ function itemLabel(item, index) {
 function initGallery(config) {
   galleryItems = config.items || [];
   grid.innerHTML = "";
+  thumbsBuilt = false;
   buildGallery();
 }
 
@@ -138,13 +141,71 @@ function observeItems() {
   });
 }
 
-/* ── Lightbox ── */
-function pauseLightboxVideo() {
-  if (!lightboxVideo.hidden) {
-    lightboxVideo.pause();
-    lightboxVideo.removeAttribute("src");
-    lightboxVideo.load();
+function thumbSrc(item) {
+  if (item.type === "video") return item.poster || "";
+  return item.gridSrc || item.thumb || item.src;
+}
+
+function buildLightboxThumbs() {
+  const items = getItems();
+  lightboxThumbsTrack.innerHTML = "";
+
+  items.forEach((item, index) => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "lightbox-thumb";
+    if (item.type === "video") btn.classList.add("is-video");
+    btn.setAttribute("aria-label", itemLabel(item, index));
+
+    const src = thumbSrc(item);
+    if (src) {
+      btn.appendChild(createImage("lightbox-thumb-img", src, { lazy: true }));
+    }
+
+    if (item.type === "video") {
+      const badge = document.createElement("span");
+      badge.className = "lightbox-thumb-play";
+      badge.setAttribute("aria-hidden", "true");
+      badge.innerHTML =
+        `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>`;
+      btn.appendChild(badge);
+    }
+
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      if (currentIndex === index) return;
+      currentIndex = index;
+      updateLightbox();
+    });
+
+    lightboxThumbsTrack.appendChild(btn);
+  });
+
+  thumbsBuilt = true;
+}
+
+function updateLightboxThumbs() {
+  if (!thumbsBuilt) buildLightboxThumbs();
+
+  const buttons = lightboxThumbsTrack.querySelectorAll(".lightbox-thumb");
+  buttons.forEach((btn, index) => {
+    const isActive = index === currentIndex;
+    btn.classList.toggle("is-active", isActive);
+    btn.setAttribute("aria-current", isActive ? "true" : "false");
+  });
+
+  const active = buttons[currentIndex];
+  if (active) {
+    active.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
   }
+}
+
+/* ── Lightbox ── */
+function resetLightboxVideo() {
+  lightboxVideo.pause();
+  lightboxVideo.removeAttribute("src");
+  lightboxVideo.removeAttribute("poster");
+  lightboxVideo.load();
 }
 
 function openLightbox(index) {
@@ -157,7 +218,7 @@ function openLightbox(index) {
 }
 
 function closeLightbox() {
-  pauseLightboxVideo();
+  resetLightboxVideo();
   lightbox.classList.remove("open");
   document.body.style.overflow = "";
   setTimeout(() => {
@@ -172,8 +233,6 @@ function closeLightbox() {
 function updateLightbox() {
   const items = getItems();
   const item = items[currentIndex];
-
-  pauseLightboxVideo();
 
   if (item.type === "video") {
     lightboxImg.hidden = true;
@@ -194,6 +253,7 @@ function updateLightbox() {
       lightboxVideo.onloadedmetadata();
     }
   } else {
+    resetLightboxVideo();
     lightboxVideo.hidden = true;
     lightboxImg.hidden = false;
     lightboxMedia.classList.remove("is-video");
@@ -211,6 +271,7 @@ function updateLightbox() {
   }
 
   lightboxCounter.textContent = `${currentIndex + 1} / ${items.length}`;
+  updateLightboxThumbs();
 }
 
 function navigate(dir) {
@@ -236,10 +297,12 @@ document.addEventListener("keydown", (e) => {
 });
 
 lightbox.addEventListener("touchstart", (e) => {
+  if (e.target.closest(".lightbox-thumbs")) return;
   touchStartX = e.changedTouches[0].screenX;
 }, { passive: true });
 
 lightbox.addEventListener("touchend", (e) => {
+  if (e.target.closest(".lightbox-thumbs")) return;
   const diff = e.changedTouches[0].screenX - touchStartX;
   if (Math.abs(diff) > 50) navigate(diff > 0 ? -1 : 1);
 }, { passive: true });

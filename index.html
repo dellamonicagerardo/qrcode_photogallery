@@ -9,30 +9,42 @@
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-  <div class="page-bg" aria-hidden="true"></div>
-
-  <header class="hero">
-    <p class="hero-eyebrow" id="hero-eyebrow"></p>
-    <h1 class="hero-title" id="hero-title"></h1>
-    <p class="hero-subtitle" id="hero-subtitle"></p>
-    <div class="hero-scroll" aria-hidden="true">
-      <span>Scorri</span>
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+  <section class="intro" id="intro" aria-label="Presentazione">
+    <div class="intro-bg" id="intro-bg" aria-hidden="true">
+      <div class="intro-strip-wrap" id="intro-strip-wrap" aria-hidden="true">
+        <div class="intro-strip intro-strip--top" id="intro-strip-top"></div>
+        <div class="intro-strip intro-strip--bottom" id="intro-strip-bottom"></div>
+      </div>
+      <div class="intro-photos" id="intro-photos"></div>
+      <div class="intro-blob intro-blob--1"></div>
+      <div class="intro-blob intro-blob--2"></div>
+      <div class="intro-blob intro-blob--3"></div>
+      <div class="intro-shimmer"></div>
+      <div class="intro-veil"></div>
+    </div>
+    <div class="intro-overlay" id="intro-overlay" aria-hidden="true"></div>
+    <div class="intro-content">
+      <p class="intro-eyebrow" id="hero-eyebrow"></p>
+      <h1 class="intro-title" id="hero-title"></h1>
+      <p class="intro-subtitle" id="hero-subtitle"></p>
+    </div>
+    <button type="button" class="intro-scroll" id="intro-scroll" aria-label="Vai alla gallery">
+      <span id="hero-scroll-label">Scorri</span>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
         <path d="M12 5v14M5 12l7 7 7-7"/>
       </svg>
-    </div>
-  </header>
+    </button>
+  </section>
 
-  <main>
+  <main class="gallery-wrap" id="gallery">
     <section class="gallery-section" aria-label="Gallery foto e video">
       <div class="gallery-grid" id="gallery-grid" role="list"></div>
     </section>
+    <footer class="footer">
+      <p class="footer-heart" id="footer-symbol" aria-hidden="true">♥</p>
+      <p class="footer-text" id="footer-text"></p>
+    </footer>
   </main>
-
-  <footer class="footer">
-    <p class="footer-heart" id="footer-symbol" aria-hidden="true">♥</p>
-    <p class="footer-text" id="footer-text"></p>
-  </footer>
 
   <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Anteprima media" hidden>
     <button class="lightbox-close" id="lightbox-close" aria-label="Chiudi">
@@ -55,11 +67,17 @@
         <img class="lightbox-img" id="lightbox-img" src="" alt="" hidden>
         <video class="lightbox-video" id="lightbox-video" controls playsinline preload="metadata" hidden></video>
       </div>
-      <p class="lightbox-counter" id="lightbox-counter" aria-live="polite"></p>
     </figure>
+    <aside class="lightbox-dock" aria-label="Navigazione gallery">
+      <p class="lightbox-counter" id="lightbox-counter" aria-live="polite"></p>
+      <div class="lightbox-thumbs" id="lightbox-thumbs" aria-label="Anteprime gallery">
+        <div class="lightbox-thumbs-track" id="lightbox-thumbs-track"></div>
+      </div>
+    </aside>
   </div>
 
   <script src="assets/js/event-loader.js"></script>
+  <script src="assets/js/intro.js"></script>
   <script src="assets/js/gallery.js"></script>
   <script src="assets/js/app.js"></script>
 </body>
