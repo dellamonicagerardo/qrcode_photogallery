@@ -71,6 +71,10 @@ function initGallery(config) {
   buildGallery();
 }
 
+function isLightboxOpen() {
+  return !lightbox.hidden && lightbox.classList.contains("open");
+}
+
 /* ── Build grid ── */
 function buildGallery() {
   const items = getItems();
@@ -113,7 +117,7 @@ function buildGallery() {
     }
 
     btn.appendChild(mediaWrap);
-    btn.addEventListener("click", () => openLightbox(index));
+    btn.addEventListener("click", () => goToFoto(index));
     el.appendChild(btn);
     grid.appendChild(el);
   });
@@ -174,8 +178,7 @@ function buildLightboxThumbs() {
     btn.addEventListener("click", (e) => {
       e.stopPropagation();
       if (currentIndex === index) return;
-      currentIndex = index;
-      updateLightbox();
+      goToFoto(index, { replace: true });
     });
 
     lightboxThumbsTrack.appendChild(btn);
@@ -208,7 +211,8 @@ function resetLightboxVideo() {
   lightboxVideo.load();
 }
 
-function openLightbox(index) {
+/** Apre UI lightbox (chiamato dal router) */
+function showLightbox(index) {
   currentIndex = index;
   updateLightbox();
   lightbox.hidden = false;
@@ -217,11 +221,13 @@ function openLightbox(index) {
   btnClose.focus();
 }
 
-function closeLightbox() {
+/** Chiude UI lightbox senza toccare history */
+function hideLightbox() {
   resetLightboxVideo();
   lightbox.classList.remove("open");
   document.body.style.overflow = "";
   setTimeout(() => {
+    if (lightbox.classList.contains("open")) return;
     lightbox.hidden = true;
     lightboxImg.hidden = true;
     lightboxImg.removeAttribute("src");
@@ -232,7 +238,9 @@ function closeLightbox() {
 
 function updateLightbox() {
   const items = getItems();
+  if (!items.length) return;
   const item = items[currentIndex];
+  if (!item) return;
 
   if (item.type === "video") {
     lightboxImg.hidden = true;
@@ -276,22 +284,23 @@ function updateLightbox() {
 
 function navigate(dir) {
   const items = getItems();
-  currentIndex = (currentIndex + dir + items.length) % items.length;
-  updateLightbox();
+  if (!items.length) return;
+  const next = (currentIndex + dir + items.length) % items.length;
+  goToFoto(next, { replace: true });
 }
 
 /* ── Events ── */
-btnClose.addEventListener("click", closeLightbox);
+btnClose.addEventListener("click", () => closeFotoViaHistory());
 btnPrev.addEventListener("click", () => navigate(-1));
 btnNext.addEventListener("click", () => navigate(1));
 
 lightbox.addEventListener("click", (e) => {
-  if (e.target === lightbox) closeLightbox();
+  if (e.target === lightbox) closeFotoViaHistory();
 });
 
 document.addEventListener("keydown", (e) => {
-  if (lightbox.hidden) return;
-  if (e.key === "Escape") closeLightbox();
+  if (!isLightboxOpen()) return;
+  if (e.key === "Escape") closeFotoViaHistory();
   if (e.key === "ArrowLeft") navigate(-1);
   if (e.key === "ArrowRight") navigate(1);
 });

@@ -2,7 +2,9 @@
  * Caricamento eventi da eventi/*.json
  *
  * Selezione: ?event=nascita | ?event=matrimonio
- * Dopo un nuovo evento: node scripts/generate-event-manifest.js
+ * Colori JSON: theme.colors (+ override opzionali da URL)
+ *   ?bg=%23faf6f2&accent=%23c9a99a&text=%233d2f2a
+ *   (camelCase o kebab-case: bgWarm / bg-warm)
  */
 
 const COLOR_KEYS = [
@@ -14,6 +16,17 @@ function cssVarName(key) {
   return key.replace(/[A-Z]/g, (m) => `-${m.toLowerCase()}`);
 }
 
+/** Override colori da query string (sopra il JSON evento) */
+function colorOverridesFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  const colors = {};
+  COLOR_KEYS.forEach((key) => {
+    const value = params.get(key) || params.get(cssVarName(key));
+    if (value) colors[key] = value;
+  });
+  return colors;
+}
+
 function loadStylesheet(href, id) {
   if (document.getElementById(id)) return;
   const link = document.createElement("link");
@@ -23,18 +36,21 @@ function loadStylesheet(href, id) {
   document.head.appendChild(link);
 }
 
-function applyTheme(theme) {
-  if (!theme) return;
+function applyTheme(theme, urlColors = {}) {
   const root = document.documentElement;
+  const colors = { ...(theme?.colors || {}), ...urlColors };
 
-  if (theme.colors) {
-    COLOR_KEYS.forEach((key) => {
-      const value = theme.colors[key];
-      if (value) root.style.setProperty(`--${cssVarName(key)}`, value);
-    });
+  COLOR_KEYS.forEach((key) => {
+    const value = colors[key];
+    if (value) root.style.setProperty(`--${cssVarName(key)}`, value);
+  });
+
+  if (urlColors.bg || colors.bg) {
+    const el = document.querySelector('meta[name="theme-color"]');
+    if (el) el.content = urlColors.bg || colors.bg;
   }
 
-  if (theme.fonts) {
+  if (theme?.fonts) {
     if (theme.fonts.googleUrl) {
       loadStylesheet(theme.fonts.googleUrl, "event-fonts");
     }
@@ -148,8 +164,9 @@ async function bootEvent() {
   if (!eventId) throw new Error("Nessun evento configurato");
 
   const config = await loadEventConfig(manifest, eventId);
-  applyTheme(config.theme);
+  config.id = config.id || eventId;
   applyMeta(config.meta);
+  applyTheme(config.theme, colorOverridesFromUrl());
   applyHero(config.hero);
   applyFooter(config.footer);
 

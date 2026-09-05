@@ -3,6 +3,7 @@ bootEvent()
     initIntro();
     initIntroBackground(config);
     initGallery(config);
+    initRouter(config.id);
   })
   .catch((err) => {
     console.error(err);

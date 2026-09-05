@@ -23,11 +23,35 @@ videos/
 ## Anteprima locale
 
 ```bash
-python -m http.server 8080
+python -m http.server 5500
 ```
 
-- `http://localhost:8080/?event=nascita`
-- `http://localhost:8080/?event=matrimonio`
+- `http://localhost:5500/?event=nascita`
+- `http://localhost:5500/?event=matrimonio`
+- `http://localhost:5500/?event=nascita#gallery`
+- `http://localhost:5500/?event=nascita#foto/3` — apre direttamente la 3ª foto
+
+### URL condivisibili
+
+| URL | Effetto |
+|-----|---------|
+| `?event=nascita` | Intro dell’evento |
+| `?event=nascita#gallery` | Gallery |
+| `?event=nascita#foto/2` | Lightbox sulla 2ª foto (1-based) |
+
+Su smartphone, **Indietro / swipe back** chiude il lightbox e torna alla gallery (History API).
+
+### Colori del template
+
+Definiti in `eventi/<evento>.json` → `theme.colors` (come i menu di `qrcode_demo`).
+
+Override opzionale da URL (utile per QR personalizzati senza nuovo JSON):
+
+```
+?event=nascita&bg=%23faf6f2&accent=%23c9a99a&gold=%23b8956a&text=%233d2f2a
+```
+
+Chiavi: `bg`, `bgWarm`, `surface`, `text`, `textSoft`, `accent`, `accentLight`, `gold`, `gradient1`, `gradient2` (anche in kebab-case: `bg-warm`).
 
 ## Ottimizzare foto mirrorless
 

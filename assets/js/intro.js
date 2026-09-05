@@ -79,10 +79,9 @@ function initIntroBackground(config) {
 
 function initIntro() {
   const scrollBtn = document.getElementById("intro-scroll");
-  const gallery = document.getElementById("gallery");
-  if (!scrollBtn || !gallery) return;
+  if (!scrollBtn) return;
 
   scrollBtn.addEventListener("click", () => {
-    gallery.scrollIntoView({ behavior: "smooth", block: "start" });
+    goToGallery();
   });
 }
